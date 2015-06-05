@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from models import Airway
+from rest_framework import serializers
+from serializers import AirwaySerializer
 
-# Create your views here.
+class AirwayViewSet(viewsets.ModelViewSet):
+    queryset = Airway.objects.all()
+    serializer_class = AirwaySerializer
