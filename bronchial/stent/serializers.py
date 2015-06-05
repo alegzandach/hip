@@ -4,4 +4,4 @@ from rest_framework import serializers
 class AirwaySerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Airway
-        fields = ('stl')
+        fields = ('stl',)
