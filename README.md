@@ -1,15 +1,28 @@
 # bronchial
 Bronchial Stent Designer/Viewer
 
+## Prerequisites
+
+ - python
+ - virtualenv
+ - pip
+
 ## Installation
-`git pull git@github.com:CustomOrthopaedics/bronchial.git`
+1.	`git pull git@github.com:CustomOrthopaedics/bronchial.git`
 
-`virtualenv env`
+2.	`virtualenv env`
 
-### On *nix:
+3. 
+	#### On *nix:
+	
+	`source env/bin/activate`
+	
+	#### On Windows:
+	
+	`env/Scripts/activate.bat`
 
-`source env/bin/activate`
+4.	`pip install -r requirements`
+ 
+5.	`cd bronchial/bronchial/`
 
-### On Windows:
-
-`env/Scripts/activate.bat`
+6.	`python ./manage.py runserver`
