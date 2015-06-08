@@ -3,10 +3,13 @@ Bronchial Stent Designer/Viewer
 
 ## Installation
 `git pull git@github.com:CustomOrthopaedics/bronchial.git`
+
 `virtualenv env`
 
-On *nix:
+### On *nix:
+
 `source env/bin/activate`
 
-On Windows:
+### On Windows:
+
 `env/Scripts/activate.bat`
