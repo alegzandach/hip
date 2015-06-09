@@ -28,4 +28,6 @@ Bronchial Stent Designer/Viewer
  
 6.	`cd bronchial/`
 
-7.	`python ./manage.py runserver`
+7.  `npm install`
+
+8.	`python ./manage.py runserver`
