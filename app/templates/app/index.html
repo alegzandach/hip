@@ -1,15 +1,17 @@
 {% load staticfiles %}
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app>
 <head>
-  <meta charset="utf-8" ng-app>
+  <meta charset="utf-8">
   <title>My Bronchial App</title>
   <link rel="stylesheet" href="{% static 'app/bower_components/bootstrap/dist/css/bootstrap.css' %}">
   <script src="{% static 'app/bower_components/angular/angular.js' %}"></script>
 </head>
 <body>
   
-  <p>Nothing here yet</p>
+  {% verbatim %}
+  <p>Nothing here {{'yet' + '!'}}</p>
+  {% endverbatim %}
 
 </body>
 </html>
