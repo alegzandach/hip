@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^api/api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', include('app.urls')),
 ]
 
 if settings.DEBUG:

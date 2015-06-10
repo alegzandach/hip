@@ -6,6 +6,7 @@ Bronchial Stent Designer/Viewer
  - python
  - virtualenv
  - pip
+ - node
 
 ## Installation
 1.	`git pull git@github.com:CustomOrthopaedics/bronchial.git`
@@ -27,4 +28,6 @@ Bronchial Stent Designer/Viewer
  
 6.	`cd bronchial/`
 
-7.	`python ./manage.py runserver`
+7.  `npm install`
+
+8.	`python ./manage.py runserver`
