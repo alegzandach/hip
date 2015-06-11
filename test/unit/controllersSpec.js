@@ -1,26 +1,26 @@
 'use strict'
 
 /* jasmine specs for controllers go here */
-
 describe('Stent controllers', function() {
-  beforeEach(module('stentApp'));
-
-  var $controller;
-
-  beforeEach(inject(function(_$controller_) {
-    $controller = _$controller_;
-  }));
-
   describe('AirwayListCtrl', function() {
-    var $scope, controller;
+    var scope, ctrl, $httpBackend;
 
-    beforeEach(function() {
-      $scope = {};
-      controller = $controller('AirwayListCtrl', {$scope: $scope});
-    });
+    beforeEach(module('stentApp'));
 
-    it("should create an 'airways' model with 3 airways", function() {
-      expect($scope.airways.length).toBe(3);
+    beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
+      $httpBackend = _$httpBackend_;
+      $httpBackend.expectGET('api/airways').
+        respond({"count": 1,"results":[{"stl":"urlstring"}]});
+
+      scope = $rootScope.$new();
+      ctrl = $controller('AirwayListCtrl', {$scope: scope});
+    }));
+
+    it("should create an 'airways' model with 2 airways", function() {
+      expect(scope.airways).toBeUndefined();
+      $httpBackend.flush();
+
+      expect(scope.airways).toEqual({"count": 1,"results":[{"stl":"urlstring"}]});
     });
 
   });
