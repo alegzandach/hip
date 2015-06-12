@@ -25,9 +25,23 @@ Bronchial Stent Designer/Viewer
 	`env/Scripts/activate.bat`
 
 5.	`pip install -r requirements`
- 
-6.	`cd bronchial/`
 
-7.  `npm install`
+6.	`npm install`
 
-8.	`python ./manage.py runserver`
+## Usage
+
+1.	`npm start`
+	
+2.	Navigate to http://localhost:8000
+
+
+## Test
+	#### Unit tests:
+	
+	`npm test`
+	
+	#### End-to-End tests:
+	
+	1.	`npm start`
+
+	2.	In a separate terminal: `npm run protractor`
