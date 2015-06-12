@@ -36,12 +36,12 @@ Bronchial Stent Designer/Viewer
 
 
 ## Test
-	#### Unit tests:
-	
-	`npm test`
-	
-	#### End-to-End tests:
-	
-	1.	`npm start`
+#### Unit tests:
 
-	2.	In a separate terminal: `npm run protractor`
+`npm test`
+
+#### End-to-End tests:
+
+1.	`npm start`
+
+2.	In a separate terminal: `npm run protractor`
