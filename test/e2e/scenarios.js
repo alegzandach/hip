@@ -1,10 +1,11 @@
 describe('Stent App', function() {
 
+  beforeEach(function() {
+    browser.get('/');
+  });
+
   describe('Airways list view', function() {
 
-    beforeEach(function() {
-      browser.get('/');
-    });
 
     it('should have three airways', function() {
       var airwayList = element.all(by.repeater('airway in airways'));
