@@ -1,15 +1,23 @@
 {% load staticfiles %}
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="stentApp">
 <head>
-  <meta charset="utf-8" ng-app>
+  <meta charset="utf-8">
   <title>My Bronchial App</title>
   <link rel="stylesheet" href="{% static 'app/bower_components/bootstrap/dist/css/bootstrap.css' %}">
+  <link rel="icon" href="{% static 'app/img/logo.ico' %}">
   <script src="{% static 'app/bower_components/angular/angular.js' %}"></script>
+  <script src="{% static 'app/js/controllers.js' %}"></script>
 </head>
-<body>
-  
-  <p>Nothing here yet</p>
+{% verbatim %}
+<body ng-controller="AirwayListCtrl"> 
+
+  <ul>
+    <li ng-repeat="result in airways.results">
+      <span>{{result.stl}}</span>
+    </li>
+  </ul>
 
 </body>
+{% endverbatim %}
 </html>
