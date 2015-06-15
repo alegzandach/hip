@@ -16,5 +16,9 @@ describe('Stent App', function() {
     it('should have the title `My Bronchial App`', function() {
       expect(browser.getTitle()).toMatch(/My Bronchial App$/);
     });
+
+    it('should have a canvas element', function() {
+      expect(element.all(by.css('canvas')).isPresent()).toBe('true');
+    });
   });
 });
