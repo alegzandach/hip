@@ -7,7 +7,7 @@
   "scripts": {
     "postinstall": "bower install",
     "prestart": "npm install",
-    "start": "python ./manage.py runserver",
+    "start": "python ./manage.py collectstatic --noinput && python ./manage.py runserver",
     "pretest": "npm install",
     "test": "node node_modules/karma/bin/karma start test/karma.conf.js",
     "test-single-run": "node node_modules/karma/bin/karma start test/karma.conf.js --single-run",
