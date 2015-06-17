@@ -1,0 +1,22 @@
+{
+  "name": "bronchial",
+  "version": "0.0.0",
+  "homepage": "https://github.com/CustomOrthopaedics/bronchial",
+  "authors": [
+    "Rakesh Guha <guha.rakesh@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.1",
+    "bootstrap": "~3.3.5",
+    "angular-mocks": "~1.4.1"
+  }
+}
