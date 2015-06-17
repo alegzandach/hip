@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '$d4&)a0p@-ljl7yg4_75)-2n_243l_8*wk2*_k4$vuw4ahh4c2'
+SECRET_KEY = 'ngbd#37lkv07($z$ledy95e+xs^4ey)8r$=2ybkly!(q$^$289'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,8 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'stent',
-    'app',
+    'viewer',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -104,12 +103,11 @@ USE_TZ = True
 
 ENV_PATH = os.path.abspath(os.path.dirname(__file__))
 MEDIA_ROOT = os.path.join(ENV_PATH, 'media/')
-STATIC_ROOT = os.path.join(ENV_PATH, 'static/')
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
-REST_FRAMEWORK = {
+REST_FRAMEWORK  = {
     'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
     'PAGE_SIZE': 10
 }
