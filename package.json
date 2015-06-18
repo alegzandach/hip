@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "bower install",
-    "prestart": "npm install",
+    "prestart": "pip install -r requirements.txt & npm install",
     "start": "python ./manage.py runserver",
     "pretest": "npm install",
     "test": "node node_modules/karma/bin/karma start test/karma.conf.js",
@@ -15,6 +15,7 @@
     "update-webdriver": "webdriver-manager update",
     "preprotractor": "npm run update-webdriver",
     "protractor": "protractor test/protractor-conf.js",
+    "preserve": "pip install -r requirements.txt & npm install",
     "serve": "http-server app/ -a 0.0.0.0 -p 8888"
   },
   "repository": {
