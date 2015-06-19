@@ -7,7 +7,7 @@
   "scripts": {
     "postinstall": "bower install",
     "prestart": "pip install -r requirements.txt & npm install",
-    "start": "python ./manage.py runserver",
+    "start": "http-server app/ -a 0.0.0.0 -p 8888",
     "pretest": "npm install",
     "test": "node node_modules/karma/bin/karma start test/karma.conf.js",
     "test-single-run": "node node_modules/karma/bin/karma start test/karma.conf.js --single-run",
@@ -16,7 +16,7 @@
     "preprotractor": "npm run update-webdriver",
     "protractor": "protractor test/protractor-conf.js",
     "preserve": "pip install -r requirements.txt & npm install",
-    "serve": "http-server app/ -a 0.0.0.0 -p 8888"
+    "serve": "python ./manage.py runserver"
   },
   "repository": {
     "type": "git",
@@ -31,10 +31,11 @@
   "devDependencies": {
     "bower": "^1.4.1",
     "http-server": "^0.8.0",
+    "jasmine": "^2.3.1",
     "jasmine-core": "^2.3.4",
     "karma": "^0.12.36",
     "karma-chrome-launcher": "^0.1.12",
-    "karma-jasmine": "^0.3.5",
+    "karma-jasmine": "~0.2.0",
     "protractor": "^2.1.0"
   }
 }
