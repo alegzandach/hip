@@ -1,5 +1,3 @@
-<ul class="stlFiles">
-  <li ng-repeat="stl in stlFiles.results">
-    {{stl.id}}
-  </li>
-</ul>
+<div ng-repeat="stl in stlFiles.results">
+  <stl-viewer model-url="{{stl.stlFile}}"></stl-viewer>
+</div>
