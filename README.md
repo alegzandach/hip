@@ -18,11 +18,11 @@ Bronchial Stent Designer/Viewer
 4. 
 	#### On *nix:
 	
-		`source env/bin/activate`
+		source env/bin/activate
 	
 	#### On Windows:
 	
-		`env/Scripts/activate.bat`
+		env/Scripts/activate.bat
 
 5.	`pip install -r requirements`
 
