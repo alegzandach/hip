@@ -1,26 +1,28 @@
+'use strict';
+
 var viewerDirectives = angular.module('viewerDirectives', []);
 
-viewerDirectives.directive('stlViewer', [function() {
+viewerDirectives.directive('stlViewer', function() {
   return {
     restrict: "E",
-    scope: {
-      modelUrl: "=modelUrl"
-    },
+    scope: false,
     link: function(scope, elem, attr) {
       var camera;
       var scene;
       var renderer;
-      var previous;
+      var modelUrl;
 
       init();
+      attr.$observe('modelUrl', function(value) {
+        loadModel(value);
+      });
       animate();
 
       function init() {
-        camera = new THREE.PerspectiveCamera( 50, window.innerWidth / winder.innerHeight, 1, 15);
-        camera.position.set( 2, 4, 5 );
-
+        camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 2000);
+        camera.position.set(2, 4, 5);
         scene = new THREE.Scene();
-        scene.fog = new THREE.Fog( 0x72645b, 2, 15 );
+        scene.fog = new THREE.FogExp2(0x000000, 0.035);
 
         // Lights
         scene.add(new THREE.AmbientLight(0xcccccc));
@@ -38,35 +40,29 @@ viewerDirectives.directive('stlViewer', [function() {
 
         // Events
         window.addEventListener('resize', onWindowResize, false);
-
-        var loader = new THREE.STLLoader();
-        var material = new THREE.MeshPhongMaterial( { color: 0xAAAAAA, specullar: 0x111111, shininess: 200 } );
-
-        loader.load(scope.modelUrl, function( geometry ) {
-
-          var meshMaterial = material;
-
-          if (geometry.hasColors) {
-            meshMaterial = new THREE.MeshPhongMaterial({ opacity: geometry.alpha, vertexColors: THREE.VertexColors });
-          }
-
-          var mesh = new THREE.Mesh( geometry, meshMaterial );
-
-          mesh.position.set( 0, -0.37, -0.6 );
-          mesh.rotation.set( -Math.PI / 2, 0, 0 );
-          mesh.scale.set( 2, 2, 2 );
-
-          mesh.castShadow = true;
-          mesh.receiveShadow = true;
-
-          scene.add( mesh );
-        });
       }
 
       function onWindowResize(event) {
         renderer.setSize(window.innerWidth, window.innerHeight);
         camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectMatrix();
+        camera.updateProjectionMatrix();
+      }
+
+      function loadModel(url) {
+        var loader = new THREE.STLLoader();
+        loader.load(url, function(geometry) {
+          var material = new THREE.MeshPhongMaterial({color: 0xAAAAAA, specular: 0x111111, shininess: 200});
+          var mesh = new THREE.Mesh(geometry, material);
+
+          mesh.position.set(0, -0.37, -0.6);
+          mesh.rotation.set(-Math.PI / 2, 0, 0);
+          mesh.scale.set(0.05, 0.05, 0.05);
+
+          mesh.castShadow = true;
+          mesh.receiveShadow = true;
+
+          scene.add(mesh);
+        });
       }
 
       function animate() {
@@ -83,5 +79,5 @@ viewerDirectives.directive('stlViewer', [function() {
         renderer.render(scene, camera);
       }
     }
-  }
-}]);
+  };
+});

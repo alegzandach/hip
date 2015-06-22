@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var viewerControllers = angular.module('viewerControllers', []);
 
