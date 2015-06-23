@@ -15,8 +15,11 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.4.0",
-    "bootstrap": "~3.3.4",
-    "angular-mocks": "~1.4.0"
+    "angular": "~1.4.1",
+    "bootstrap": "~3.3.5",
+    "angular-mocks": "~1.4.1",
+    "angular-route": "~1.4.1",
+    "angular-resource": "~1.4.1",
+    "threejs": "*"
   }
 }

@@ -11,10 +11,10 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Airway',
+            name='STL',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', auto_created=True, primary_key=True)),
-                ('stl', models.FileField(upload_to='STLfiles')),
+                ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True, serialize=False)),
+                ('stlFile', models.FileField(upload_to='')),
             ],
         ),
     ]

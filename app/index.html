@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en" ng-app="viewerApp">
+<head>
+  <meta charset="utf-8">
+  <title>STL Viewer</title>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-resource/angular-resource.js"></script>
+  <script src="bower_components/threejs/build/three.min.js"></script>
+  <script src="bower_components/threejs/examples/js/loaders/STLLoader.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/directives.js"></script>
+
+  <base href="/">
+</head>
+<body>
+  <div class="view-controller">
+    <div ng-view class="view-frame"></div>
+  </div>
+</body>
+</html>
