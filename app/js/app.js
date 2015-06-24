@@ -10,7 +10,7 @@ var viewerApp = angular.module('viewerApp', [
 viewerApp.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
     $routeProvider.
-      when('/', {
+      when('/stl', {
         templateUrl: 'partials/stl-list.html',
         controller: 'STLListCtrl'
       });

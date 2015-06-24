@@ -4,4 +4,4 @@ from rest_framework import serializers
 class STLSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = STL
-        fields = ('id', 'stlFile',)
+        fields = ('id', 'url',)

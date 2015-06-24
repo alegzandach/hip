@@ -1,1 +1,3 @@
-<stl-viewer model-url="{{stlFiles.results[0].stlFile}}"></stl-viewer>
+<ul ng-repeat="stl in stlFiles">
+  <li ng-bind="stl.id"></li>
+</ul>
