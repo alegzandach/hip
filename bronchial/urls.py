@@ -16,11 +16,14 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from rest_framework import routers
-from viewer import views
+from viewer import views as viewer_views
+from accounts import views as accounts_views
 from django.conf import settings
 
 router = routers.DefaultRouter()
-router.register(r'stl', views.STLViewSet)
+router.register(r'stl', viewer_views.STLViewSet)
+router.register(r'users', accounts_views.UserViewSet)
+router.register(r'groups', accounts_views.GroupViewSet)
 
 urlpatterns = [
     url(r'^api/', include(router.urls)),
