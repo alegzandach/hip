@@ -28,6 +28,7 @@ router.register(r'groups', accounts_views.GroupViewSet)
 urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^api/api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
     url(r'^admin/', include(admin.site.urls)),
 ]
 
