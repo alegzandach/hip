@@ -11,3 +11,10 @@ viewerControllers.controller('STLListCtrl', ['$scope', 'STL',
     });
 
   }]);
+
+viewerControllers.controller('LoginCtrl', ['$scope', 'Login',
+  function($scope, Login) {
+    $scope.login = function() {
+      Login.login($scope.username, $scope.password);
+    }
+  }]);
