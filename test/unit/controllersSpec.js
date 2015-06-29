@@ -2,14 +2,6 @@
 
 describe('Viewer controllers', function() {
 
-  beforeEach(function() {
-    this.addMatchers({
-      toEqualData: function(expected) {
-        return angular.equals(this.actual, expected);
-      }
-    });
-  });
-
   beforeEach(module('viewerApp'));
   
   describe('STLListCtrl', function()  {
@@ -17,7 +9,7 @@ describe('Viewer controllers', function() {
 
     beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
       $httpBackend = _$httpBackend_;
-      $httpBackend.expectGET('api/stl').
+      $httpBackend.expectGET('http://localhost:8000/api/stl/').
         respond({"count": 1, "results":[{"stl":"urlstring"}]});
 
       scope = $rootScope.$new();
@@ -28,8 +20,22 @@ describe('Viewer controllers', function() {
       // expect(scope.stlFiles).toEqualData([]);
       $httpBackend.flush();
 
-      expect(scope.stlFiles).toEqualData(
-          {"count": 1, "results":[{"stl":"urlstring"}]});
+      expect(scope.stlFiles).toEqual(
+          [{"stl":"urlstring"}]);
+    });
+  });
+
+  describe('LoginCtrl', function() {
+    var scope, ctrl;
+
+    beforeEach(inject(function($rootScope, $controller) {
+      scope = $rootScope.$new();
+      ctrl = $controller('LoginCtrl', {$scope: scope});
+    }));
+
+    it('should return a function that calls the login service with scope variables', function() {
+      expect(scope.login).toEqual(jasmine.any(Function));
+      expect(scope.login.toString()).toMatch(/function \(\){.*?;Login.login\(\$scope\.username,\$scope\.password\);}/);
     });
   });
 

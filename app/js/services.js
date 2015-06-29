@@ -4,6 +4,7 @@ var viewerServices = angular.module('viewerServices', ['ngResource']);
 
 viewerServices.factory('STL', ['$resource',
   function($resource) {
+    var yo = $resource('http://localhost:8000/api/stl/');
     return $resource('http://localhost:8000/api/stl/');
   }]);
 
@@ -20,10 +21,9 @@ viewerServices.factory('Login', ['$rootScope', '$http',
         data: str
       };
       return $http(request).success(function(data, status, headers, config) {
-        sessionStorage.access_token = JSON.stringify(data['token']);
-      }).error(function(data, status, headers, config) {
-        console.log(data);
-      });
+        var token = JSON.stringify(data['token']);
+        sessionStorage.access_token = token;
+      })
     }
     return({login: login});
   }]);

@@ -19,12 +19,19 @@ module.exports = function(config) {
 
     plugins: [
       'karma-chrome-launcher',
-      'karma-jasmine'
+      'karma-jasmine',
+			'karma-coverage',
     ],
 
-    junitReporter: {
-      outputFile: 'test_out/unit.xml',
-      suite: 'unit'
-    }
+    reporters: ['progress', 'coverage'],
+
+    preprocessors: {
+      'app/js/**/*.js': ['coverage']
+    },
+
+		coverageReporter: {
+			type: 'text'
+		}
+
   });
 };

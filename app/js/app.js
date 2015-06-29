@@ -42,8 +42,6 @@ viewerApp.config(['$httpProvider',
             return config;
           },
           'response': function(response) {
-            console.log($rootScope);
-            console.log(response.config.headers);
             return response;
           }
         };
