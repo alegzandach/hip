@@ -26,16 +26,22 @@ describe('Viewer controllers', function() {
   });
 
   describe('LoginCtrl', function() {
-    var scope, ctrl;
+    var scope, LoginCtrl, getTokenService;
 
-    beforeEach(inject(function($rootScope, $controller) {
+    beforeEach(inject(function($rootScope, $controller, _getTokenService_) {
       scope = $rootScope.$new();
-      ctrl = $controller('LoginCtrl', {$scope: scope});
+      LoginCtrl = $controller('LoginCtrl', {$scope: scope});
+      getTokenService = _getTokenService_;
+      spyOn(getTokenService, 'get');
     }));
 
     it('should return a function that calls the login service with scope variables', function() {
-      expect(scope.login).toEqual(jasmine.any(Function));
-      expect(scope.login.toString()).toMatch(/function \(\){.*?;Login.login\(\$scope\.username,\$scope\.password\);}/);
+      scope['username'] = 'admin';
+      scope['password'] = 'password';
+
+      scope.login();
+      expect(getTokenService.get).toHaveBeenCalledWith('admin', 'password');
+
     });
   });
 

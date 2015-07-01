@@ -12,9 +12,9 @@ viewerControllers.controller('STLListCtrl', ['$scope', 'STL',
 
   }]);
 
-viewerControllers.controller('LoginCtrl', ['$scope', 'Login',
-  function($scope, Login) {
+viewerControllers.controller('LoginCtrl', ['$scope','getTokenService',
+  function($scope, getTokenService) {
     $scope.login = function() {
-      Login($scope.username, $scope.password);
+      getTokenService.get($scope.username, $scope.password);
     }
   }]);

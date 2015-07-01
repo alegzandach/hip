@@ -4,24 +4,68 @@ describe('Viewer services', function() {
   beforeEach(module('viewerApp'));
 
   describe('getTokenService', function() {
-    var getTokenService, $httpBackend;
+    var getTokenService, sessionStorageService, $httpBackend;
 
+    beforeEach(inject(function(_getTokenService_, _sessionStorageService_,  _$httpBackend_) {
+      getTokenService = _getTokenService_;
+      sessionStorageService = _sessionStorageService_;
+
+      $httpBackend = _$httpBackend_;
+    }));
+
+  });
+
+  describe('getTokenService', function() {
+    var getTokenService, $httpBackend;
+    
     beforeEach(inject(function(_getTokenService_, _$httpBackend_) {
       getTokenService = _getTokenService_;
 
       $httpBackend = _$httpBackend_;
-      $httpBackend.expectPOST('http://localhost:8000/api-token-auth/', 'username=admin&password=password').
-        respond({token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ'});
     }));
 
-    it('should return a JWT auth token when called with a username and password', function() {
-      var token = getTokenService('admin', 'password');
+    it('should fetch an auth token', function(done) {
+      var testToken = function(response) {
+        var token = response.data['token'];
+        expect(token).toEqual('abcd.1234.xyz');
+      };
+
+      var getFail = function(error) {
+        expect(error).toBeUndefined();
+      };
+
+      $httpBackend.expectPOST('http://localhost:8000/api-token-auth/', 'username=admin&password=password').
+        respond(200, {'token': 'abcd.1234.xyz'});
+
+      getTokenService.get('admin', 'password').
+        then(testToken).
+        catch(getFail).
+        finally(done);
+
       $httpBackend.flush();
-
-      expect(token).toMatch(/^[a-zA-Z0-9].*[a-zA-Z0-9].*[a-zA-Z0-9]$/);
     });
-  });
+    
+    it('should catch an error', function(done) {
+      var testToken = function(response) {
+        var token = response.data['token'];
+      };
 
+      var getFail = function(error) {
+        expect(error.status).toBe(400);
+      };
+
+      $httpBackend.expectPOST('http://localhost:8000/api-token-auth/', 'username=admin&password=password').
+        respond(400, 'Bad request...');
+
+      getTokenService.get('admin', 'password').
+        then(testToken).
+        catch(getFail).
+        finally(done);
+
+      $httpBackend.flush();
+    });
+
+  });
   describe('sessionStorageService', function() {
     var sessionStorageService, key, value;
 
