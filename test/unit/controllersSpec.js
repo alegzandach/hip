@@ -38,14 +38,40 @@ describe('Viewer controllers', function() {
         deferred.resolve({'token': 'abcd.1234.xyz'});
         return deferred.promise;
       });
+      spyOn(sessionStorageService, 'set');
     }));
 
     it('should return a function that calls the login service with scope variables', function() {
       scope['username'] = 'admin';
       scope['password'] = 'password';
 
-      scope.login();
+      var promise = scope.login();
       expect(getTokenService.get).toHaveBeenCalledWith('admin', 'password');
+    });
+  });
+
+  describe('LoginCtrl', function() {
+    var scope, LoginCtrl, getTokenService, sessionStorageService, $httpBackend;
+
+    beforeEach(inject(function($q, $rootScope, $controller, _getTokenService_, _sessionStorageService_, _$httpBackend_) {
+      scope = $rootScope.$new();
+      LoginCtrl = $controller('LoginCtrl', {$scope: scope});
+      getTokenService = _getTokenService_;
+      sessionStorageService = _sessionStorageService_;
+      $httpBackend = _$httpBackend_;
+      spyOn(sessionStorageService, 'set');
+
+      $httpBackend.expectPOST('http://localhost:8000/api-token-auth/', 'username=admin&password=password').
+        respond(200, {'token': 'abcd.1234.xyz'});
+    }));
+
+    it('should call the set function of sessionStorageService', function() {
+      scope['username'] = 'admin';
+      scope['password'] = 'password';
+
+      var promise = scope.login();
+      $httpBackend.flush();
+      expect(sessionStorageService.set).toHaveBeenCalledWith('access_token', 'abcd.1234.xyz');
     });
   });
 

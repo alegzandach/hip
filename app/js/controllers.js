@@ -21,7 +21,7 @@ viewerControllers.controller('LoginCtrl', ['$scope','getTokenService', 'sessionS
     var fail = function(error) {
     };
     $scope.login = function() {
-      getTokenService.get($scope.username, $scope.password).
+      return getTokenService.get($scope.username, $scope.password).
         then(success).
         catch(fail);
     }
