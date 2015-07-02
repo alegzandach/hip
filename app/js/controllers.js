@@ -12,9 +12,17 @@ viewerControllers.controller('STLListCtrl', ['$scope', 'STL',
 
   }]);
 
-viewerControllers.controller('LoginCtrl', ['$scope','getTokenService',
-  function($scope, getTokenService) {
+viewerControllers.controller('LoginCtrl', ['$scope','getTokenService', 'sessionStorageService',
+  function($scope, getTokenService, sessionStorageService) {
+    var success = function(response) {
+      var token = response.data['token'];
+      sessionStorageService.set('access_token', token);
+    };
+    var fail = function(error) {
+    };
     $scope.login = function() {
-      getTokenService.get($scope.username, $scope.password);
+      getTokenService.get($scope.username, $scope.password).
+        then(success).
+        catch(fail);
     }
   }]);

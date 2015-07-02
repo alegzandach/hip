@@ -26,13 +26,18 @@ describe('Viewer controllers', function() {
   });
 
   describe('LoginCtrl', function() {
-    var scope, LoginCtrl, getTokenService;
+    var scope, LoginCtrl, getTokenService, sessionStorageService;
 
-    beforeEach(inject(function($rootScope, $controller, _getTokenService_) {
+    beforeEach(inject(function($q, $rootScope, $controller, _getTokenService_, _sessionStorageService_) {
       scope = $rootScope.$new();
       LoginCtrl = $controller('LoginCtrl', {$scope: scope});
       getTokenService = _getTokenService_;
-      spyOn(getTokenService, 'get');
+      sessionStorageService = _sessionStorageService_;
+      spyOn(getTokenService, 'get').and.callFake(function() {
+        var deferred = $q.defer();
+        deferred.resolve({'token': 'abcd.1234.xyz'});
+        return deferred.promise;
+      });
     }));
 
     it('should return a function that calls the login service with scope variables', function() {
@@ -41,7 +46,6 @@ describe('Viewer controllers', function() {
 
       scope.login();
       expect(getTokenService.get).toHaveBeenCalledWith('admin', 'password');
-
     });
   });
 
