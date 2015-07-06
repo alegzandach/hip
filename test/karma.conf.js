@@ -10,7 +10,7 @@ module.exports = function(config) {
       'app/bower_components/angular-resource/angular-resource.js',
       'app/bower_components/angular-mocks/angular-mocks.js',
       'app/js/**/*.js',
-      'test/unit/**/*.js'
+      'test/unit/**/*.js',
     ],
 
     autoWatch: true,
@@ -26,7 +26,7 @@ module.exports = function(config) {
     reporters: ['progress', 'coverage'],
 
     preprocessors: {
-      'app/js/**/*.js': ['coverage']
+      'app/js/**/!(app|directives).js': ['coverage']
     },
 
 		coverageReporter: {
