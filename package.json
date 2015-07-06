@@ -34,6 +34,7 @@
     "jasmine-core": "^2.3.4",
     "karma": "^0.12.36",
     "karma-chrome-launcher": "^0.1.12",
+    "karma-coverage": "^0.4.2",
     "karma-jasmine": "~0.2.0",
     "protractor": "^2.1.0",
     "pushstate-server": "^1.6.0"

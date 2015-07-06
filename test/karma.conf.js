@@ -10,7 +10,7 @@ module.exports = function(config) {
       'app/bower_components/angular-resource/angular-resource.js',
       'app/bower_components/angular-mocks/angular-mocks.js',
       'app/js/**/*.js',
-      'test/unit/**/*.js'
+      'test/unit/**/*.js',
     ],
 
     autoWatch: true,
@@ -19,12 +19,19 @@ module.exports = function(config) {
 
     plugins: [
       'karma-chrome-launcher',
-      'karma-jasmine'
+      'karma-jasmine',
+			'karma-coverage',
     ],
 
-    junitReporter: {
-      outputFile: 'test_out/unit.xml',
-      suite: 'unit'
-    }
+    reporters: ['progress', 'coverage'],
+
+    preprocessors: {
+      'app/js/**/!(app|directives).js': ['coverage']
+    },
+
+		coverageReporter: {
+			type: 'text'
+		}
+
   });
 };

@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ./app/js/directives.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../prettify.css">
+    <link rel="stylesheet" href="../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">./app/js/directives.js</span></h1>
+    <h2>
+        Statements: <span class="metric">13.46% <small>(7 / 52)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">0% <small>(0 / 9)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">13.46% <small>(7 / 52)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">./app/js/</a> &#187; directives.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+&nbsp;
+var viewerDirectives = angular.module('viewerDirectives', []);
+&nbsp;
+viewerDirectives.directive('stlViewer', <span class="fstat-no" title="function not covered" >function() {</span>
+<span class="cstat-no" title="statement not covered" >  return {</span>
+    restrict: "E",
+    scope: false,
+    link: <span class="fstat-no" title="function not covered" >function(scope, elem, attr) {</span>
+<span class="cstat-no" title="statement not covered" >      var camera;</span>
+<span class="cstat-no" title="statement not covered" >      var scene;</span>
+<span class="cstat-no" title="statement not covered" >      var renderer;</span>
+<span class="cstat-no" title="statement not covered" >      var modelUrl;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      init();</span>
+<span class="cstat-no" title="statement not covered" >      attr.$observe('modelUrl', <span class="fstat-no" title="function not covered" >function(value) {</span></span>
+<span class="cstat-no" title="statement not covered" >        loadModel(value);</span>
+      });
+<span class="cstat-no" title="statement not covered" >      animate();</span>
+&nbsp;
+<span class="fstat-no" title="function not covered" >      function init() {</span>
+<span class="cstat-no" title="statement not covered" >        camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 2000);</span>
+<span class="cstat-no" title="statement not covered" >        camera.position.set(2, 4, 5);</span>
+<span class="cstat-no" title="statement not covered" >        scene = new THREE.Scene();</span>
+<span class="cstat-no" title="statement not covered" >        scene.fog = new THREE.FogExp2(0x000000, 0.035);</span>
+&nbsp;
+        // Lights
+<span class="cstat-no" title="statement not covered" >        scene.add(new THREE.AmbientLight(0xcccccc));</span>
+<span class="cstat-no" title="statement not covered" >        var directionalLight = new THREE.DirectionalLight(0xeeeeee);</span>
+<span class="cstat-no" title="statement not covered" >        directionalLight.position.x = Math.random() - 0.5;</span>
+<span class="cstat-no" title="statement not covered" >        directionalLight.position.y = Math.random() - 0.5;</span>
+<span class="cstat-no" title="statement not covered" >        directionalLight.position.z = Math.random() - 0.5;</span>
+<span class="cstat-no" title="statement not covered" >        directionalLight.position.normalize();</span>
+<span class="cstat-no" title="statement not covered" >        scene.add(directionalLight);</span>
+&nbsp;
+        // Renderer
+<span class="cstat-no" title="statement not covered" >        renderer = new THREE.WebGLRenderer();</span>
+<span class="cstat-no" title="statement not covered" >        renderer.setSize(window.innerWidth, window.innerHeight);</span>
+<span class="cstat-no" title="statement not covered" >        elem[0].appendChild(renderer.domElement);</span>
+&nbsp;
+        // Events
+<span class="cstat-no" title="statement not covered" >        window.addEventListener('resize', onWindowResize, false);</span>
+      }
+&nbsp;
+<span class="fstat-no" title="function not covered" >      function onWindowResize(event) {</span>
+<span class="cstat-no" title="statement not covered" >        renderer.setSize(window.innerWidth, window.innerHeight);</span>
+<span class="cstat-no" title="statement not covered" >        camera.aspect = window.innerWidth / window.innerHeight;</span>
+<span class="cstat-no" title="statement not covered" >        camera.updateProjectionMatrix();</span>
+      }
+&nbsp;
+<span class="fstat-no" title="function not covered" >      function loadModel(url) {</span>
+<span class="cstat-no" title="statement not covered" >        var loader = new THREE.STLLoader();</span>
+<span class="cstat-no" title="statement not covered" >        loader.load(url, <span class="fstat-no" title="function not covered" >function(geometry) {</span></span>
+<span class="cstat-no" title="statement not covered" >          var material = new THREE.MeshPhongMaterial({color: 0xAAAAAA, specular: 0x111111, shininess: 200});</span>
+<span class="cstat-no" title="statement not covered" >          var mesh = new THREE.Mesh(geometry, material);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          mesh.position.set(0, -0.37, -0.6);</span>
+<span class="cstat-no" title="statement not covered" >          mesh.rotation.set(-Math.PI / 2, 0, 0);</span>
+<span class="cstat-no" title="statement not covered" >          mesh.scale.set(0.05, 0.05, 0.05);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          mesh.castShadow = true;</span>
+<span class="cstat-no" title="statement not covered" >          mesh.receiveShadow = true;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >          scene.add(mesh);</span>
+        });
+      }
+&nbsp;
+<span class="fstat-no" title="function not covered" >      function animate() {</span>
+<span class="cstat-no" title="statement not covered" >        requestAnimationFrame(animate);</span>
+<span class="cstat-no" title="statement not covered" >        render();</span>
+      }
+&nbsp;
+<span class="fstat-no" title="function not covered" >      function render() {</span>
+<span class="cstat-no" title="statement not covered" >        var timer = Date.now() * 0.0005;</span>
+<span class="cstat-no" title="statement not covered" >        camera.position.x = Math.cos(timer) * 10;</span>
+<span class="cstat-no" title="statement not covered" >        camera.position.y = 4;</span>
+<span class="cstat-no" title="statement not covered" >        camera.position.z = Math.sin(timer) * 10;</span>
+<span class="cstat-no" title="statement not covered" >        camera.lookAt(scene.position);</span>
+<span class="cstat-no" title="statement not covered" >        renderer.render(scene, camera);</span>
+      }
+    }
+  };
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jun 29 2015 09:19:43 GMT-0400 (Eastern Daylight Time)</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'django_nose',
     'corsheaders',
     'accounts',
     'viewer',
@@ -121,3 +122,11 @@ REST_FRAMEWORK  = {
 CORS_ORIGIN_WHITELIST = (
     'localhost:8888'
 )
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=viewer,accounts',
+    '--cover-inclusive',
+]
