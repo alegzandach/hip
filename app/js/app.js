@@ -4,7 +4,8 @@ var viewerApp = angular.module('viewerApp', [
   'ngRoute',
   'viewerControllers',
   'viewerServices',
-  'viewerDirectives'
+  'viewerDirectives',
+  'ui.bootstrap'
 ]);
 
 viewerApp.config(['$routeProvider', '$locationProvider',
