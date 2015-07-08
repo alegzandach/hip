@@ -18,6 +18,7 @@ viewerControllers.controller('LoginCtrl', ['$rootScope', '$scope','getTokenServi
       var token = response.data['token'];
       sessionStorageService.set('access_token', token);
       $rootScope.$broadcast('event:loginConfirmed');
+      $scope.$close();
     };
     var fail = function(error) {
     };
@@ -25,5 +26,15 @@ viewerControllers.controller('LoginCtrl', ['$rootScope', '$scope','getTokenServi
       return getTokenService.get($scope.username, $scope.password).
         then(success).
         catch(fail);
+    }
+  }]);
+
+viewerControllers.controller('LoginModalCtrl', ['$modal', '$scope',
+  function($modal, $scope) {
+    $scope.open = function() {
+      return $modal.open({
+        templateUrl: 'partials/login.html',
+        controller: 'LoginCtrl'
+      });
     }
   }]);
