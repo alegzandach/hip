@@ -4,7 +4,6 @@ var viewerServices = angular.module('viewerServices', ['ngResource']);
 
 viewerServices.factory('STL', ['$resource',
   function($resource) {
-    var yo = $resource('http://localhost:8000/api/stl/');
     return $resource('http://localhost:8000/api/stl/');
   }]);
 
@@ -40,6 +39,3 @@ viewerServices.factory('sessionStorageService', [
       }
     };
   }]);
-
-
-

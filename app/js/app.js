@@ -4,7 +4,8 @@ var viewerApp = angular.module('viewerApp', [
   'ngRoute',
   'viewerControllers',
   'viewerServices',
-  'viewerDirectives'
+  'viewerDirectives',
+  'ui.bootstrap'
 ]);
 
 viewerApp.config(['$routeProvider', '$locationProvider',
@@ -31,53 +32,67 @@ viewerApp.config(['$routeProvider', '$locationProvider',
 
 viewerApp.config(['$httpProvider',
   function($httpProvider) {
-    $httpProvider.interceptors.push(['$rootScope',
-      function($rootScope) {
+    $httpProvider.interceptors.push(['$rootScope', '$q', '$injector', '$controller',
+      function($rootScope, $q, $injector, $controller) {
         return {
           'request': function(config) {
             if (sessionStorage.getItem('access_token')) {
               config.headers['Authorization'] = "JWT " + sessionStorage.getItem('access_token');
-              console.log(config.headers);
             }
             return config;
           },
           'response': function(response) {
             return response;
+          },
+          'responseError': function(response) {
+            if (response.status == 401) {
+              $controller('LoginModalCtrl', {$scope: $rootScope});              
+              var $http = $injector.get('$http');
+              var deferred = $q.defer();
+              $rootScope.open().result.
+                then(deferred.resolve);;
+              
+              return deferred.promise.then(function() {
+                return $http(response.config);
+              });
+            }
+            return $q.reject(response);
           }
         };
       }]);
   }]);
 
 /**
- * On 401 response, this stores the request in requests401 and broadcasts 'event:loginReequired'.
+ * On 401 response, this stores the request in requests401 and broadcasts 'event:loginRequired'.
  */
-viewerApp.config(['$httpProvider',
-  function($httpProvider) {
-    var interceptor = ['$rootScope', '$q', function($rootScope, $q) {
-      function success(response) {
-        return response;
-      }
-
-      function error(response) {
-        var status = response.status;
-
-        if (status === 401) {
-          var deferred = $q.defer();
-          var req = {
-            config: response.config,
-            deferred: deferred
-          };
-
-          $rootScope.requests401.push(req);
-          $rootScope.$broadcast('event:loginRequired');
-          return deferred.promise;
-        }
-
-        return $q.reject(response);
-      }
-    }];
-  }]);
-
+// viewerApp.config(['$httpProvider',
+  // function($httpProvider) {
+    // var interceptor = ['$rootScope', '$q', function($rootScope, $q) {
+      // function success(response) {
+        // return response;
+      // }
+// 
+      // function error(response) {
+        // var status = response.status;
+// 
+        // if (status === 401) {
+          // var deferred = $q.defer();
+          // var req = {
+            // config: response.config,
+            // deferred: deferred
+          // };
+// 
+          // $rootScope.requests401.push(req);
+          // $rootScope.$broadcast('event:loginRequired');
+          // return deferred.promise;
+        // }
+// 
+        // return $q.reject(response);
+      // }
+    // }];
+    // $httpProvider.interceptors.push(interceptor);
+  // }]);
+// 
 viewerApp.config(['$resourceProvider',
   function($resourceProvider) {
     $resourceProvider.defaults.stripTrailingSlashes = false;

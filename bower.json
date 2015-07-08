@@ -20,6 +20,7 @@
     "angular-mocks": "~1.4.1",
     "angular-route": "~1.4.1",
     "angular-resource": "~1.4.1",
-    "threejs": "*"
+    "threejs": "*",
+    "angular-bootstrap": "~0.13.0"
   }
 }

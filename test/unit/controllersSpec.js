@@ -51,28 +51,42 @@ describe('Viewer controllers', function() {
   });
 
   describe('LoginCtrl', function() {
-    var scope, LoginCtrl, getTokenService, sessionStorageService, $httpBackend;
+    var rootScope, scope, LoginCtrl, getTokenService, sessionStorageService, $httpBackend;
 
     beforeEach(inject(function($q, $rootScope, $controller, _getTokenService_, _sessionStorageService_, _$httpBackend_) {
       scope = $rootScope.$new();
-      LoginCtrl = $controller('LoginCtrl', {$scope: scope});
+      rootScope = $rootScope.$new();
+      LoginCtrl = $controller('LoginCtrl', {$rootScope: rootScope, $scope: scope});
       getTokenService = _getTokenService_;
       sessionStorageService = _sessionStorageService_;
       $httpBackend = _$httpBackend_;
       spyOn(sessionStorageService, 'set');
+      spyOn(rootScope, '$broadcast');
 
       $httpBackend.expectPOST('http://localhost:8000/api-token-auth/', 'username=admin&password=password').
         respond(200, {'token': 'abcd.1234.xyz'});
     }));
 
-    it('should call the set function of sessionStorageService', function() {
+    it('should call the set function of sessionStorageService and confirm login', function() {
       scope['username'] = 'admin';
       scope['password'] = 'password';
 
       var promise = scope.login();
       $httpBackend.flush();
       expect(sessionStorageService.set).toHaveBeenCalledWith('access_token', 'abcd.1234.xyz');
+      expect(rootScope.$broadcast).toHaveBeenCalledWith('event:loginConfirmed');
     });
+
+  });
+
+  describe('LoginModalCtrl', function() {
+    var scope, $modal, LoginModalCtrl;
+
+    beforeEach(inject(function($rootScope, _$modal_, $controller) {
+      scope = $rootScope.$new();
+      $modal = _$modal_;
+      LoginModalCtrl = $controller('LoginModalCtrl', {$scope: scope});
+    }));
   });
 
 });
