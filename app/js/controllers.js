@@ -34,7 +34,8 @@ viewerControllers.controller('LoginModalCtrl', ['$modal', '$scope',
     $scope.open = function() {
       return $modal.open({
         templateUrl: 'partials/login.html',
-        controller: 'LoginCtrl'
+        controller: 'LoginCtrl',
+        backdrop: false
       });
     }
   }]);
