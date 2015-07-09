@@ -12,7 +12,7 @@ viewerDirectives.directive('stlViewer', function() {
       var renderer;
       var modelUrl;
       var controls;
-      var slices = 50;
+      var slices = 40;
 
       init();
       attr.$observe('modelUrl', function(value) {
@@ -114,7 +114,7 @@ viewerDirectives.directive('stlViewer', function() {
       function loadModel(url) {
         var loader = new THREE.STLLoader();
         loader.load(url, function(geometry) {
-          var material = new THREE.MeshPhongMaterial({color: 0xAAAAAA, specular: 0x111111, shininess: 200, wireframe: true});
+          var material = new THREE.MeshPhongMaterial({color: 0xAAAAAA, specular: 0x111111, shininess: 200, wireframe: false});
           material.opacity = 0.2;
           material.transparent = true;
           var mesh = new THREE.Mesh(geometry, material);
@@ -128,7 +128,7 @@ viewerDirectives.directive('stlViewer', function() {
 
           var bbox = new THREE.BoundingBoxHelper(mesh, 0xFFFF00);
           bbox.update();
-          scene.add(bbox);
+          mesh.add(bbox);
           
           var line = centerline(geometry, bbox);
           mesh.add(line);
@@ -174,7 +174,6 @@ viewerDirectives.directive('stlViewer', function() {
         var line = new THREE.Line(lineGeo, material);
         // line.rotation.set(-math.pi / 2, 0, 0);
         // line.scale.set(0.05, 0.05, 0.05);
-        scene.add(line);
         return line;
       }
 
