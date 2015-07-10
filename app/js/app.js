@@ -23,6 +23,10 @@ viewerApp.config(['$routeProvider', '$locationProvider',
         templateUrl: 'partials/viewer.html',
         controller: 'STLListCtrl'
       }).
+      when('/', {
+        templateUrl: 'partials/home.html',
+        controller: 'HomeCtrl'
+      }).
       otherwise({
         redirectTo: '/login'
       });

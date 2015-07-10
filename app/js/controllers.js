@@ -39,3 +39,8 @@ viewerControllers.controller('LoginModalCtrl', ['$modal', '$scope',
       });
     }
   }]);
+
+viewerControllers.controller('HomeCtrl', ['sessionStorageService',
+  function($scope, sessionStorageService) {
+
+  }]);
