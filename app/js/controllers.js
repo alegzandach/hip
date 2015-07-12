@@ -40,7 +40,18 @@ viewerControllers.controller('LoginModalCtrl', ['$modal', '$scope',
     }
   }]);
 
-viewerControllers.controller('HomeCtrl', ['sessionStorageService',
-  function($scope, sessionStorageService) {
-
+viewerControllers.controller('HomeCtrl', ['$rootScope', '$scope', 'sessionStorageService', '$location',
+  function($rootScope, $scope, sessionStorageService, $location) {
+    console.log($rootScope.loggedin);
+    var changeLocation = function(url, force) {
+      $location.path(url);
+      $scope = $scope || angular.element(document).scope();
+      if (force || !$scope.$$phase) {
+        $scope.$apply();
+      }
+    };
+    if ($rootScope.loggedin) {
+      debugger;
+      changeLocation('/cases', false);
+    }
   }]);
