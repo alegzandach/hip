@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_nose',
     'corsheaders',
     'accounts',
@@ -132,3 +133,5 @@ NOSE_ARGS = [
     '--cover-package=viewer,accounts',
     '--cover-inclusive',
 ]
+
+AUTH_USER_MODEL = 'accounts.User'
