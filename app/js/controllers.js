@@ -51,7 +51,6 @@ viewerControllers.controller('HomeCtrl', ['$rootScope', '$scope', 'sessionStorag
       }
     };
     if ($rootScope.loggedin) {
-      debugger;
       changeLocation('/cases', false);
     }
   }]);

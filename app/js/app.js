@@ -45,7 +45,7 @@ viewerApp.config(['$httpProvider',
         return {
           'request': function(config) {
             if (sessionStorage.getItem('access_token')) {
-              config.headers['Authorization'] = "JWT " + sessionStorage.getItem('access_token');
+              config.headers['Authorization'] = "Token " + sessionStorage.getItem('access_token');
             }
             return config;
           },
