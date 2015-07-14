@@ -167,10 +167,8 @@ viewerDirectives.directive('stlViewer', function() {
           sum.divideScalar(pointCount);
           var newVector = new THREE.Vector3();
           newVector.copy(sum);
-          console.log(sum);
           lineGeo.vertices.push(newVector);
         }
-        console.log(lineGeo);
         var line = new THREE.Line(lineGeo, material);
         // line.rotation.set(-math.pi / 2, 0, 0);
         // line.scale.set(0.05, 0.05, 0.05);

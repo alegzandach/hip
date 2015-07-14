@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'django_nose',
     'corsheaders',
     'accounts',
@@ -113,11 +114,11 @@ MEDIA_URL = '/media/'
 
 REST_FRAMEWORK  = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
         ),
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
     'PAGE_SIZE': 10
 }
 
@@ -132,3 +133,5 @@ NOSE_ARGS = [
     '--cover-package=viewer,accounts',
     '--cover-inclusive',
 ]
+
+AUTH_USER_MODEL = 'accounts.User'

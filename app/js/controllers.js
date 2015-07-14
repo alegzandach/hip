@@ -17,6 +17,8 @@ viewerControllers.controller('LoginCtrl', ['$rootScope', '$scope','getTokenServi
     var success = function(response) {
       var token = response.data['token'];
       sessionStorageService.set('access_token', token);
+      var email = response.data['user'];
+      sessionStorageService.set('user', email);
       $rootScope.$broadcast('event:loginConfirmed');
       $scope.$close();
     };
@@ -37,5 +39,20 @@ viewerControllers.controller('LoginModalCtrl', ['$modal', '$scope',
         controller: 'LoginCtrl',
         backdrop: false
       });
+    }
+  }]);
+
+viewerControllers.controller('HomeCtrl', ['$rootScope', '$scope', 'sessionStorageService', '$location',
+  function($rootScope, $scope, sessionStorageService, $location) {
+    console.log($rootScope.loggedin);
+    var changeLocation = function(url, force) {
+      $location.path(url);
+      $scope = $scope || angular.element(document).scope();
+      if (force || !$scope.$$phase) {
+        $scope.$apply();
+      }
+    };
+    if ($rootScope.loggedin) {
+      changeLocation('/cases', false);
     }
   }]);
