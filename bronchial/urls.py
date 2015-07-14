@@ -18,8 +18,8 @@ from django.contrib import admin
 from rest_framework import routers
 from viewer import views as viewer_views
 from accounts import views as accounts_views
-from rest_framework.authtoken import views as auth_views
 from django.conf import settings
+from rest_framework.authtoken import views as token_views
 
 router = routers.DefaultRouter()
 router.register(r'stl', viewer_views.STLViewSet)
@@ -29,7 +29,7 @@ router.register(r'groups', accounts_views.GroupViewSet)
 urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^api/api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api-token-auth/', auth_views.obtain_auth_token),
+    url(r'^api-token-auth/', accounts_views.obtain_user_auth_token),
     url(r'^admin/', include(admin.site.urls)),
 ]
 

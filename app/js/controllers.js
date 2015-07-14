@@ -17,6 +17,8 @@ viewerControllers.controller('LoginCtrl', ['$rootScope', '$scope','getTokenServi
     var success = function(response) {
       var token = response.data['token'];
       sessionStorageService.set('access_token', token);
+      var email = response.data['user'];
+      sessionStorageService.set('user', email);
       $rootScope.$broadcast('event:loginConfirmed');
       $scope.$close();
     };
