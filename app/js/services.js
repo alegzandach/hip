@@ -39,3 +39,27 @@ viewerServices.factory('sessionStorageService', [
       }
     };
   }]);
+
+viewerServices.factory('authService', ['sessionStorageService', '$location', 
+  function(sessionStorageService, $location) {
+    var authService = {};
+    
+    authService.isAuthenticated = function() {
+      return !!sessionStorageService.get('user');
+    }
+    authService.changeLocation = function(url, force) {
+      $location.path(url);
+      $scope = $scope || angular.element(document).scope();
+      if (force || !$scope.$$phase) {
+        $scope.$apply();
+      }
+    }
+    authService.success = function(response) {
+      var token = response.data['token'];
+      sessionStorageService.set('access_token', token);
+      var email = response.data['user'];
+      sessionStorageService.set('user', email);
+    }
+
+    return authService;
+  }]);

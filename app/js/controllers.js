@@ -12,21 +12,16 @@ viewerControllers.controller('STLListCtrl', ['$scope', 'STL',
 
   }]);
 
-viewerControllers.controller('LoginCtrl', ['$rootScope', '$scope','getTokenService', 'sessionStorageService',
-  function($rootScope, $scope, getTokenService, sessionStorageService) {
-    var success = function(response) {
-      var token = response.data['token'];
-      sessionStorageService.set('access_token', token);
-      var email = response.data['user'];
-      sessionStorageService.set('user', email);
-      $rootScope.$broadcast('event:loginConfirmed');
-      $scope.$close();
-    };
+viewerControllers.controller('LoginCtrl', ['$scope','getTokenService', 'authService',
+  function($scope, getTokenService, authService) {
     var fail = function(error) {
     };
     $scope.login = function() {
       return getTokenService.get($scope.username, $scope.password).
-        then(success).
+        then(function(response) {
+          authService.success(response);
+          $scope.$close();
+        }).
         catch(fail);
     }
   }]);
@@ -42,17 +37,37 @@ viewerControllers.controller('LoginModalCtrl', ['$modal', '$scope',
     }
   }]);
 
-viewerControllers.controller('HomeCtrl', ['$rootScope', '$scope', 'sessionStorageService', '$location',
-  function($rootScope, $scope, sessionStorageService, $location) {
-    console.log($rootScope.loggedin);
-    var changeLocation = function(url, force) {
-      $location.path(url);
-      $scope = $scope || angular.element(document).scope();
-      if (force || !$scope.$$phase) {
-        $scope.$apply();
-      }
+viewerControllers.controller('LoginHomeCtrl', ['$scope','getTokenService', 'authService',
+  function($scope, getTokenService, authService) {
+    var fail = function(error) {
     };
-    if ($rootScope.loggedin) {
-      changeLocation('/cases', false);
+    $scope.login = function() {
+      return getTokenService.get($scope.username, $scope.password).
+        then(function(response) {
+          authService.success(response);
+          $scope.$close();
+          authService.changeLocation('/cases', false);
+        }).
+        catch(fail);
+    }
+  }]);
+
+viewerControllers.controller('LoginHomeModalCtrl', ['$modal', '$scope',
+  function($modal, $scope) {
+    $scope.open = function() {
+      return $modal.open({
+        templateUrl: 'partials/login.html',
+        controller: 'LoginHomeCtrl',
+        backdrop: false
+      });
+    }
+  }]);
+
+viewerControllers.controller('HomeCtrl', ['$scope', 'authService', '$controller',
+  function($scope, authService, $controller) {
+    $controller('LoginHomeModalCtrl', {$scope: $scope, redirect: true});
+
+    if (authService.isAuthenticated()) {
+      authService.changeLocation('/cases', false);
     }
   }]);
