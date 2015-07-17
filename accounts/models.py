@@ -20,7 +20,7 @@ class UserManager(BaseUserManager):
     def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
         now = timezone.now()
         if not email:
-            raise ValueError('The given email must be set')
+            raise ValueError('Users must have an email address')
 
         email = self.normalize_email(email)
         user = self.model(email=email, is_staff=is_staff, is_active=False, is_superuser=is_superuser, last_login=now, date_joined=now, **extra_fields)
@@ -55,6 +55,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'user'
         verbose_name_plural = 'users'
+
+    def __unicode__(self):
+        return self.email
 
     def get_full_name(self):
         full_name = '%s %s' % (self.first_name, self.last_name)
