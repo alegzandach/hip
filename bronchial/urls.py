@@ -29,7 +29,7 @@ router.register(r'groups', accounts_views.GroupViewSet)
 urlpatterns = [
     url(r'^api/', include(router.urls)),
     url(r'^api/api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api-token-auth/', accounts_views.obtain_user_auth_token),
+    url(r'^api-token-auth/', token_views.obtain_auth_token),
     url(r'^admin/', include(admin.site.urls)),
 ]
 
