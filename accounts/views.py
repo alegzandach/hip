@@ -14,8 +14,11 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 User = get_user_model()
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        return User.objects.filter(email=user)
 
 class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
