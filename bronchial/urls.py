@@ -18,12 +18,14 @@ from django.contrib import admin
 from rest_framework import routers
 from viewer import views as viewer_views
 from accounts import views as accounts_views
+from usertypes import views as usertypes_views 
 from django.conf import settings
 from rest_framework.authtoken import views as token_views
 
 router = routers.DefaultRouter()
 router.register(r'stl', viewer_views.STLViewSet)
 router.register(r'users', accounts_views.UserViewSet, 'user')
+router.register(r'profiles', usertypes_views.GeneralUserViewSet, 'profile')
 router.register(r'groups', accounts_views.GroupViewSet)
 
 urlpatterns = [
