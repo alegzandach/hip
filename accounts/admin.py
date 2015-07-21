@@ -8,8 +8,7 @@ from accounts.models import User
 
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required fields, plus a 
-    repeated password.
-    """
+    repeated password.  """
 
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
@@ -68,4 +67,4 @@ class MyUserAdmin(UserAdmin):
     filter_horizontal = ()
     
 
-admin.site.register(User, MyUserAdmin)
+# admin.site.register(User, MyUserAdmin)
