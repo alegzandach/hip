@@ -4,7 +4,10 @@ var viewerServices = angular.module('viewerServices', ['ngResource']);
 
 viewerServices.factory('STL', ['$resource',
   function($resource) {
-    return $resource('http://localhost:8000/api/stl/');
+    return {
+      list: $resource('http://localhost:8000/api/stl/'),
+      id: $resource('http://localhost:8000/api/stl/:stlID/', {stlID: '@id'})
+    }
   }]);
 
 viewerServices.factory('getTokenService', ['$http',
@@ -45,20 +48,18 @@ viewerServices.factory('authService', ['sessionStorageService', '$location',
     var authService = {};
     
     authService.isAuthenticated = function() {
-      return !!sessionStorageService.get('user');
+      return !!sessionStorageService.get('access_token');
     }
     authService.changeLocation = function(url, force) {
       $location.path(url);
-      $scope = $scope || angular.element(document).scope();
-      if (force || !$scope.$$phase) {
-        $scope.$apply();
-      }
+      // $scope = $scope || angular.element(document).scope();
+      // if (force || !$scope.$$phase) {
+        // $scope.$apply();
+      // }
     }
     authService.success = function(response) {
       var token = response.data['token'];
       sessionStorageService.set('access_token', token);
-      var email = response.data['user'];
-      sessionStorageService.set('user', email);
     }
 
     return authService;

@@ -6,21 +6,23 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 from rest_framework.authtoken.models import Token
+from usertypes.models import GeneralUser
 from django.conf import settings
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_auth_token(sender, instance=None, created=False, **kwargs):
+def create_auth_token_and_general_user(sender, instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+        GeneralUser.objects.create(user=instance)
 
 class UserManager(BaseUserManager):
 
     def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
         now = timezone.now()
         if not email:
-            raise ValueError('The given email must be set')
+            raise ValueError('Users must have an email address')
 
         email = self.normalize_email(email)
         user = self.model(email=email, is_staff=is_staff, is_active=False, is_superuser=is_superuser, last_login=now, date_joined=now, **extra_fields)
@@ -44,7 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField('email address', max_length=355, unique=True);
 
     is_staff = models.BooleanField('staff status', default=False, help_text='Designates whether the user can log into this admin site.')
-    is_active = models.BooleanField('active', default=False, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.')
+    is_active = models.BooleanField('active', default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.')
 
     date_joined = models.DateTimeField('date joined', default=timezone.now)
 
@@ -55,6 +57,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = 'user'
         verbose_name_plural = 'users'
+
+    def __unicode__(self):
+        return self.email
 
     def get_full_name(self):
         full_name = '%s %s' % (self.first_name, self.last_name)

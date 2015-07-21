@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'corsheaders',
     'accounts',
     'viewer',
+    'usertypes',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -118,7 +119,7 @@ REST_FRAMEWORK  = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         ),
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.DjangoModelPermissions',),
     'PAGE_SIZE': 10
 }
 

@@ -19,9 +19,9 @@ viewerApp.config(['$routeProvider', '$locationProvider',
         templateUrl: 'partials/login.html',
         controller: 'LoginCtrl'
       }).
-      when('/viewer', {
-        templateUrl: 'partials/viewer.html',
-        controller: 'STLListCtrl'
+      when('/viewer/:stlID', {
+        templateUrl:'partials/viewer.html',
+        controller: 'ViewerCtrl'
       }).
       when('/cases', {
         templateUrl: 'partials/cases.html',
