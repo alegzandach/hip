@@ -5,5 +5,9 @@ from viewer.serializers import STLSerializer
 # Create your views here.
 
 class STLViewSet(viewsets.ModelViewSet):
-    queryset = STL.objects.all()
     serializer_class = STLSerializer
+    queryset = STL.objects.none()
+
+    def get_queryset(self):
+        user = self.request.user
+        return STL.objects.filter(user=user.generaluser)
