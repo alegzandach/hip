@@ -1,4 +1,17 @@
-Cases:
-<ul ng-repeat="stl in stlFiles">
-  <li ng-bind="stl.id"></li>
-</ul>
+<div class="container">
+  <table class="table">
+    <caption>Cases</caption>
+    <thead>
+      <tr>
+        <th>Case #</td>
+        <th>Viewer</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="stl in stlFiles">
+        <th scope="row" ng-bind="stl.id"></th>
+        <td><a ng-href="/viewer/{{stl.id}}">Viewer</a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -67,4 +67,4 @@ class MyUserAdmin(UserAdmin):
     filter_horizontal = ()
     
 
-# admin.site.register(User, MyUserAdmin)
+admin.site.register(User, MyUserAdmin)

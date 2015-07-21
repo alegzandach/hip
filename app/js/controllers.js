@@ -2,9 +2,20 @@
 
 var viewerControllers = angular.module('viewerControllers', []);
 
+viewerControllers.controller('ViewerCtrl', ['$scope', '$routeParams', 'STL',
+  function($scope, $routeParams, STL) {
+    var id = $routeParams.stlID;
+
+    var get = STL.id.get({stlID: id});
+
+    get.$promise.then(function(data) {
+      $scope.url = data.url;
+    });
+  }]);
+
 viewerControllers.controller('STLListCtrl', ['$scope', 'STL',
   function($scope, STL) {
-    var get = STL.get();
+    var get = STL.list.get();
 
     get.$promise.then(function(data) {
       $scope.stlFiles = data.results;

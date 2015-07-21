@@ -4,7 +4,10 @@ var viewerServices = angular.module('viewerServices', ['ngResource']);
 
 viewerServices.factory('STL', ['$resource',
   function($resource) {
-    return $resource('http://localhost:8000/api/stl/');
+    return {
+      list: $resource('http://localhost:8000/api/stl/'),
+      id: $resource('http://localhost:8000/api/stl/:stlID/', {stlID: '@id'})
+    }
   }]);
 
 viewerServices.factory('getTokenService', ['$http',
