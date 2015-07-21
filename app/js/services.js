@@ -52,10 +52,6 @@ viewerServices.factory('authService', ['sessionStorageService', '$location',
     }
     authService.changeLocation = function(url, force) {
       $location.path(url);
-      // $scope = $scope || angular.element(document).scope();
-      // if (force || !$scope.$$phase) {
-        // $scope.$apply();
-      // }
     }
     authService.success = function(response) {
       var token = response.data['token'];
