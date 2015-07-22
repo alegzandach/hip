@@ -5,7 +5,9 @@ var viewerDirectives = angular.module('viewerDirectives', []);
 viewerDirectives.directive('stlViewer', function() {
   return {
     restrict: "E",
-    scope: false,
+    scope: {
+      control: "="
+    },
     link: function(scope, elem, attr) {
       var camera;
       var scene;
@@ -13,15 +15,25 @@ viewerDirectives.directive('stlViewer', function() {
       var modelUrl;
       var controls;
       var slices = 40;
-
+      var canvasWidth = 800;
+      var canvasHeight = 600;
+      var line;
+      
+      
       init();
       attr.$observe('modelUrl', function(value) {
         loadModel(value);
       });
       animate();
 
+      scope.controls = scope.control || {};
+
+      scope.controls.toggleCenterline = function() {
+        line.visible = !line.visible;
+      }
+
       function init() {
-        camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 2000);
+        camera = new THREE.PerspectiveCamera(50, canvasWidth / canvasHeight, 1, 2000);
         camera.position.x = 4;
         camera.position.y = 4;
         camera.position.z = 4;
@@ -30,7 +42,7 @@ viewerDirectives.directive('stlViewer', function() {
 
         // Renderer
         renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(canvasWidth, canvasHeight);
         elem[0].appendChild(renderer.domElement);
 
         // Controls
@@ -74,8 +86,8 @@ viewerDirectives.directive('stlViewer', function() {
       }
 
       function onWindowResize(event) {
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        camera.aspect = window.innerWidth / window.innerHeight;
+        renderer.setSize(canvasWidth, canvasHeight);
+        camera.aspect = canvasWidth / canvasHeight;
         camera.updateProjectionMatrix();
         controls.handleResize();
       }
@@ -130,7 +142,7 @@ viewerDirectives.directive('stlViewer', function() {
           bbox.update();
           mesh.add(bbox);
           
-          var line = centerline(geometry, bbox);
+          line = centerline(geometry, bbox);
           mesh.add(line);
           mesh.rotation.set(-Math.PI / 2, 0, 0);
           mesh.scale.set(0.05, 0.05, 0.05);

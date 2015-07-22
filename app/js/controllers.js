@@ -6,8 +6,10 @@ viewerControllers.controller('ViewerCtrl', ['$scope', '$routeParams', 'STL',
   function($scope, $routeParams, STL) {
     var id = $routeParams.stlID;
 
-    var get = STL.id.get({stlID: id});
+    $scope.canvasControl = {
+    };
 
+    var get = STL.id.get({stlID: id});
     get.$promise.then(function(data) {
       $scope.url = data.url;
     });
