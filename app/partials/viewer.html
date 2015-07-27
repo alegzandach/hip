@@ -1,1 +1,12 @@
-<stl-viewer model-url="{{url}}"></stl-viewer>
+<ng-include src="'partials/navbar.html'"></ng-include>
+<div class="container" id="canvas-container">
+  <div class="row">
+    <div class="col-sm-11">
+      <stl-viewer model-url="{{url}}" control="canvasControl"></stl-viewer>
+    </div>
+    <div class="col-sm-1">
+      <button class="btn btn-default" ng-click="canvasControl.toggleCenterline()">Toggle Centerline</button>
+      <button class="btn btn-default" ng-click="canvasControl.addSphere()">Add Sphere</button>
+    </div>
+  </div>
+</div>

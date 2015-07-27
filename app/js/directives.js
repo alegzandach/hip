@@ -5,7 +5,9 @@ var viewerDirectives = angular.module('viewerDirectives', []);
 viewerDirectives.directive('stlViewer', function() {
   return {
     restrict: "E",
-    scope: false,
+    scope: {
+      control: "="
+    },
     link: function(scope, elem, attr) {
       var camera;
       var scene;
@@ -13,24 +15,111 @@ viewerDirectives.directive('stlViewer', function() {
       var modelUrl;
       var controls;
       var slices = 40;
-
+      var canvasWidth = 800;
+      var canvasHeight = 600;
+      var line;
+      var raycaster = new THREE.Raycaster();
+      var mouse = new THREE.Vector2();
+      var selected;
+      var objects = [];
+      var topOffset;
+      var leftOffset;
+      var plane;
+      
       init();
       attr.$observe('modelUrl', function(value) {
         loadModel(value);
       });
       animate();
 
+      scope.controls = scope.control || {};
+
+      scope.controls.toggleCenterline = function() {
+        line.visible = !line.visible;
+      }
+
+      scope.controls.addSphere = function() {
+        objects.push(buildSphere());
+      }
+
+      function onDocumentMouseMove(event) {
+        event.preventDefault();
+
+        topOffset = elem[0].getBoundingClientRect().top;
+        leftOffset = elem[0].getBoundingClientRect().left;
+
+        mouse.set( ((event.clientX - leftOffset) / canvasWidth)*2-1, -((event.clientY - topOffset) / canvasHeight)*2+1);
+        raycaster.setFromCamera(mouse, camera);
+
+        var intersects = raycaster.intersectObjects(objects, true);
+        if (intersects.length > 0) {
+          var intersected = intersects[0];
+          var intersects = raycaster.intersectObject(plane);
+          plane.position.copy(intersected.object.position);
+          plane.lookAt(camera.position);
+          elem[0].style.cursor = 'move';
+        } else {
+          elem[0].style.cursor = 'auto';
+        }
+
+        if (selected) {
+          var intersects = raycaster.intersectObject(plane);
+          selected.object.position.copy(intersects[0].point);
+        }
+      }
+
+      function onDocumentMouseDown(event) {
+        event.preventDefault();
+
+        topOffset = elem[0].getBoundingClientRect().top;
+        leftOffset = elem[0].getBoundingClientRect().left;
+
+        mouse.set( ((event.clientX - leftOffset) / canvasWidth)*2-1, -((event.clientY - topOffset) / canvasHeight)*2+1);
+        raycaster.setFromCamera(mouse, camera);
+
+        var intersects = raycaster.intersectObjects(objects, true);
+        if (intersects.length > 0) {
+          controls.enabled = false;
+          selected = intersects[0];
+
+          var intersects = raycaster.intersectObject(plane);
+          elem[0].style.cursor = 'move';
+        }
+      }
+
+      function onDocumentMouseUp(event) {
+        event.preventDefault();
+
+        if (selected) {
+          selected = null;
+        }
+
+        controls.enabled = true;
+        elem[0].style.cursor = 'auto';
+      }
+
+      function buildSphere() {
+        var sphereGeo = new THREE.SphereGeometry(.75,32,32);
+        var sphereMat = new THREE.MeshBasicMaterial({color:0xffff00, wireframe: true});
+        var sphere = new THREE.Mesh(sphereGeo, sphereMat);
+        scene.add(sphere);
+        console.log(sphere);
+        console.log(camera);
+        return sphere;
+      }
+
       function init() {
-        camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 2000);
-        camera.position.x = 4;
-        camera.position.y = 4;
-        camera.position.z = 4;
+        camera = new THREE.PerspectiveCamera(50, canvasWidth / canvasHeight, 1, 2000);
+        camera.position.x = 5;
+        camera.position.y = 5;
+        camera.position.z = 5;
+        console.log(camera);
         scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2(0x000000, 0.035);
 
         // Renderer
         renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(canvasWidth, canvasHeight);
         elem[0].appendChild(renderer.domElement);
 
         // Controls
@@ -50,8 +139,22 @@ viewerDirectives.directive('stlViewer', function() {
 
         controls.addEventListener('change', render);
 
+        // Intersect Plane
+        plane = new THREE.Mesh(
+                new THREE.PlaneBufferGeometry(2000,2000, 8, 8),
+                new THREE.MeshBasicMaterial({color: 0x000000, opacity: .25, transparent: true})
+        );
+        plane.visible = false;
+        scene.add(plane);
+
+        // Events
+        renderer.domElement.addEventListener('mousemove', onDocumentMouseMove, false);
+        renderer.domElement.addEventListener('mousedown', onDocumentMouseDown, false);
+        renderer.domElement.addEventListener('mouseup', onDocumentMouseUp, false);
+
         // Lights
         scene.add(new THREE.AmbientLight(0xcccccc));
+
         var directionalLight = new THREE.DirectionalLight(0xeeeeee);
         directionalLight.position.x = 0.5;
         directionalLight.position.y = 0.5;
@@ -69,13 +172,12 @@ viewerDirectives.directive('stlViewer', function() {
         var axes = buildAxes(1000);
         scene.add(axes);
 
-        // Events
-        window.addEventListener('resize', onWindowResize, false);
+        // window.addEventListener('resize', onWindowResize, false);
       }
 
       function onWindowResize(event) {
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        camera.aspect = window.innerWidth / window.innerHeight;
+        renderer.setSize(canvasWidth, canvasHeight);
+        camera.aspect = canvasWidth / canvasHeight;
         camera.updateProjectionMatrix();
         controls.handleResize();
       }
@@ -130,7 +232,7 @@ viewerDirectives.directive('stlViewer', function() {
           bbox.update();
           mesh.add(bbox);
           
-          var line = centerline(geometry, bbox);
+          line = centerline(geometry, bbox);
           mesh.add(line);
           mesh.rotation.set(-Math.PI / 2, 0, 0);
           mesh.scale.set(0.05, 0.05, 0.05);
