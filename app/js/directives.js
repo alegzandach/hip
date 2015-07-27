@@ -10,6 +10,8 @@ viewerDirectives.directive('stlViewer', function() {
     },
     link: function(scope, elem, attr) {
       var camera;
+      var cameraInitPosition;
+      var cameraInitRotation;
       var scene;
       var renderer;
       var modelUrl;
@@ -33,6 +35,10 @@ viewerDirectives.directive('stlViewer', function() {
       animate();
 
       scope.controls = scope.control || {};
+
+      scope.controls.resetCamera = function() {
+        controls.reset();
+      }
 
       scope.controls.toggleCenterline = function() {
         line.visible = !line.visible;
@@ -113,6 +119,9 @@ viewerDirectives.directive('stlViewer', function() {
         camera.position.x = 5;
         camera.position.y = 5;
         camera.position.z = 5;
+
+        cameraInitPosition = camera.position;
+        cameraInitRotation = camera.rotation;
         console.log(camera);
         scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2(0x000000, 0.035);
