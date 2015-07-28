@@ -10,6 +10,8 @@ viewerDirectives.directive('stlViewer', function() {
     },
     link: function(scope, elem, attr) {
       var camera;
+      var cameraInitPosition;
+      var cameraInitRotation;
       var scene;
       var renderer;
       var modelUrl;
@@ -34,6 +36,10 @@ viewerDirectives.directive('stlViewer', function() {
 
       scope.controls = scope.control || {};
 
+      scope.controls.resetCamera = function() {
+        controls.reset();
+      }
+
       scope.controls.toggleCenterline = function() {
         line.visible = !line.visible;
       }
@@ -53,10 +59,11 @@ viewerDirectives.directive('stlViewer', function() {
 
         var intersects = raycaster.intersectObjects(objects, true);
         if (intersects.length > 0) {
-          var intersected = intersects[0];
-          var intersects = raycaster.intersectObject(plane);
-          plane.position.copy(intersected.object.position);
-          plane.lookAt(camera.position);
+            if (!selected) {
+              var intersected = intersects[0];
+              var intersects = raycaster.intersectObject(plane);
+              plane.lookAt(camera.position);
+            }
           elem[0].style.cursor = 'move';
         } else {
           elem[0].style.cursor = 'auto';
@@ -98,6 +105,11 @@ viewerDirectives.directive('stlViewer', function() {
         elem[0].style.cursor = 'auto';
       }
 
+
+      function onDocumentMouseScroll(event) {
+        console.log(event)
+      }
+
       function buildSphere() {
         var sphereGeo = new THREE.SphereGeometry(.75,32,32);
         var sphereMat = new THREE.MeshBasicMaterial({color:0xffff00, wireframe: true});
@@ -113,6 +125,9 @@ viewerDirectives.directive('stlViewer', function() {
         camera.position.x = 5;
         camera.position.y = 5;
         camera.position.z = 5;
+
+        cameraInitPosition = camera.position;
+        cameraInitRotation = camera.rotation;
         console.log(camera);
         scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2(0x000000, 0.035);
@@ -142,15 +157,17 @@ viewerDirectives.directive('stlViewer', function() {
         // Intersect Plane
         plane = new THREE.Mesh(
                 new THREE.PlaneBufferGeometry(2000,2000, 8, 8),
-                new THREE.MeshBasicMaterial({color: 0x000000, opacity: .25, transparent: true})
+                new THREE.MeshBasicMaterial({color: 0xffffff, opacity: .25, transparent: true})
         );
-        plane.visible = false;
+        plane.visible = true;
+        plane.position.copy(new THREE.Vector3(0,0,0));
         scene.add(plane);
 
         // Events
         renderer.domElement.addEventListener('mousemove', onDocumentMouseMove, false);
         renderer.domElement.addEventListener('mousedown', onDocumentMouseDown, false);
         renderer.domElement.addEventListener('mouseup', onDocumentMouseUp, false);
+        renderer.domElement.addEventListener('scroll', onDocumentMouseScroll, false);
 
         // Lights
         scene.add(new THREE.AmbientLight(0xcccccc));
@@ -169,8 +186,8 @@ viewerDirectives.directive('stlViewer', function() {
         // scene.add(sphere);
 
         // Add axes
-        var axes = buildAxes(1000);
-        scene.add(axes);
+        // var axes = buildAxes(1000);
+        // scene.add(axes);
 
         // window.addEventListener('resize', onWindowResize, false);
       }
@@ -231,6 +248,7 @@ viewerDirectives.directive('stlViewer', function() {
           var bbox = new THREE.BoundingBoxHelper(mesh, 0xFFFF00);
           bbox.update();
           mesh.add(bbox);
+          bbox.visible = false;
           
           line = centerline(geometry, bbox);
           mesh.add(line);
